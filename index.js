@@ -1,11 +1,13 @@
 const currency = document.querySelector('.currency');
 const inputEl = currency.querySelector('.input');
 const getBtn = currency.querySelector('.get');
+const clearBtn = currency.querySelector('.clear');
 const resEl = currency.querySelector('.result');
 const fromEl = currency.querySelector('.select-from');
 const toEl = currency.querySelector('.select-to');
 
 getBtn.addEventListener('click', getCurrency);
+clearBtn.addEventListener('click', clear);
 
 function getCurrency() {
 	const fromVal = fromEl.value;
@@ -30,4 +32,10 @@ function calculate(rate) {
 	const num = inputEl.value;
 
 	resEl.innerText = Math.round(rate * num * 100) / 100;
+}
+
+function clear() {
+	inputEl.value = '';
+	resEl.innerText = '';
+	inputEl.focus();
 }
