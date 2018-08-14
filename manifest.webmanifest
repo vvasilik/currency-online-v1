@@ -1,8 +1,7 @@
 {
 	"name": "Currency",
 	"short_name": "Currency",
-	"start_url": ".",
-	"display": "fullscreen",
+	"display": "standalone",
 	"background_color": "#fefefe",
 	"description": "Currency",
 	"start_url": "https://vvasilik.github.io/currency-online",
@@ -38,11 +37,5 @@
 		"src": "images/icons/512.png",
 		"sizes": "512x512",
 		"type": "image/png"
-	}],
-	"related_applications": [{
-	  "platform": "web"
-	}, {
-	  "platform": "play",
-	  "url": "https://play.google.com/store/apps/details?id=cheeaun.hackerweb"
 	}]
   }
