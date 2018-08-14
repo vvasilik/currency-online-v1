@@ -10,7 +10,7 @@ getBtn.addEventListener('click', getCurrency);
 function getCurrency() {
 	const fromVal = fromEl.value;
 	const toVal = toEl.value;
-	const query = `http://free.currencyconverterapi.com/api/v5/convert?q=${fromVal}_${toVal}&compact=y`;
+	const query = `https://free.currencyconverterapi.com/api/v5/convert?q=${fromVal}_${toVal}&compact=y`;
 
 	fetch(query)
 		.then(resp=> {return resp.json()})
