@@ -1,0 +1,41 @@
+body {
+	margin: 0;
+	background-color: #f5f5f5;
+}
+.currency {
+	height: 100vh;
+	padding: 0 10%;
+}
+.row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: calc(100% / 3);
+}
+.input {
+	box-sizing: border-box;
+	width: 70%;
+	height: calc(100vh / 3 * .7);
+	padding: 0;
+	border: 1px solid #000;
+	background: none;
+	text-align: center;
+	font-size: 50px;
+}
+.get {
+	width: 30%;
+	height: calc(100vh / 3 * .7);
+	padding: 0;
+	border: 1px solid #000;
+	border-width: 1px 1px 1px 0;
+	font-size: 20px;
+}
+.result {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: calc(100vh / 3 * .7);
+	border: 1px solid #000;
+	font-size: 50px;
+}
