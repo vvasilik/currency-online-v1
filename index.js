@@ -1,11 +1,3 @@
-if ('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('service-worker.js').then(function(reg) {
-	  console.log('Registration succeeded. Scope is ' + reg.scope);
-	}).catch(function(error) {
-	  console.log('Registration failed with ' + error);
-	});
-  };
-
 const currency = document.querySelector('.currency');
 const inputEl = currency.querySelector('.input');
 const getBtn = currency.querySelector('.get');
@@ -14,13 +6,44 @@ const resEl = currency.querySelector('.result');
 const fromEl = currency.querySelector('.select-from');
 const toEl = currency.querySelector('.select-to');
 
-getBtn.addEventListener('click', getCurrency);
-clearBtn.addEventListener('click', clear);
+initialize();
 
+function initialize() {
+	initListeners();
+	initCurrensies();
+};
+
+function initListeners() {
+	getBtn.addEventListener('click', getCurrency);
+	clearBtn.addEventListener('click', clear);
+}
+
+function initCurrensies() {
+	const currencyData = localStorage.getItem('currencyData');
+	
+	if (!currencyData || isDateExpired(currencyData)) {debugger
+		updateData(currencyData);
+	}
+}
+
+function isDateExpired(currencyData) {
+	const updatedDate = JSON.parse(currencyData).date;
+	const currentDate = (new Date()).getTime();
+	console.log((currentDate - updatedDate) / 1000);
+	
+	return ((currentDate - updatedDate) / 1000 /*/ 60 / 60*/) > 20; //24;
+}
+
+//change it
 function getCurrency() {
 	const fromVal = fromEl.value;
 	const toVal = toEl.value;
-	const query = `https://free.currencyconverterapi.com/api/v5/convert?q=${fromVal}_${toVal}&compact=y`;
+	const query = getQuery(fromVal, toVal);
+
+	if (fromVal === toVal) {
+		calculate(rate);
+		return;
+	}
 
 	fetch(query)
 		.then(resp=> {return resp.json()})
@@ -33,7 +56,9 @@ function getCurrency() {
 
 			calculate(rate);
 		})
-		.catch(() => resEl.innerText = 'Some problems with request');
+		.catch((err) => {
+			debugger
+		});
 }
 
 function calculate(rate) {
@@ -46,4 +71,49 @@ function clear() {
 	inputEl.value = '';
 	resEl.innerText = '';
 	inputEl.focus();
+}
+
+function updateData() {
+	const allQueries = createAllQueries();
+
+	Promise.all(allQueries.map(url => fetch(url))).then(responses => {
+		return Promise.all(responses.map(res => res.json()))
+	}).then(data => {
+		save(data)
+	}).catch((err) => resEl.innerText = `Some problems with request - ${err}`)
+}
+
+function save(data) {
+	const saveData = {
+		list: data,
+		date: (new Date).getTime()
+	}
+	localStorage.setItem('currencyData', JSON.stringify(saveData));
+}
+
+function createAllQueries() {
+	const allFrom = [...fromEl.options].map(option => option.value);
+	const allTo = [...toEl.options].map(option => option.value);
+	const result = [];
+
+	allFrom.forEach(itemFrom => {
+		allTo.forEach(itemTo => {
+			if (itemFrom !== itemTo && isNotDuplicate(result, itemFrom, itemTo)) {
+				result.push(getQuery(itemFrom, itemTo));	
+			}
+		});
+	});
+
+	return result;
+}
+
+function isNotDuplicate(list, itemFrom, itemTo) {
+	const firstVal = getQuery(itemFrom, itemTo);
+	const secondVal = getQuery(itemTo, itemFrom);
+
+	return !list.includes(firstVal) && !list.includes(secondVal);
+}
+
+function getQuery(itemFrom, itemTo) {
+	return `https://free.currencyconverterapi.com/api/v5/convert?q=${itemFrom}_${itemTo}&compact=y`;
 }
