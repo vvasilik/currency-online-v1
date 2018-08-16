@@ -9,9 +9,20 @@ const toEl = currency.querySelector('.select-to');
 initialize();
 
 function initialize() {
+	initWorker();
 	initListeners();
 	initCurrensies();
 };
+
+function initWorker() {
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('service-worker.js').then(function(reg) {
+			console.log('Registration succeeded. Scope is ' + reg.scope);
+		}).catch(function(error) {
+			console.log('Registration failed with ' + error);
+		});
+	};
+}
 
 function initListeners() {
 	getBtn.addEventListener('click', getCurrency);
@@ -30,11 +41,10 @@ function isDateExpired(currencyData) {
 	const updatedDate = JSON.parse(currencyData).date;
 	const currentDate = (new Date()).getTime();
 	console.log((currentDate - updatedDate) / 1000);
-	
+	debugger
 	return ((currentDate - updatedDate) / 1000 /*/ 60 / 60*/) > 20; //24;
 }
 
-//change it
 function getCurrency() {
 	const fromVal = fromEl.value;
 	const toVal = toEl.value;
@@ -56,9 +66,7 @@ function getCurrency() {
 
 			calculate(rate);
 		})
-		.catch((err) => {
-			debugger
-		});
+		.catch(err => resEl.innerText = `Some problems with request - ${err}`);
 }
 
 function calculate(rate) {
@@ -80,7 +88,7 @@ function updateData() {
 		return Promise.all(responses.map(res => res.json()))
 	}).then(data => {
 		save(data)
-	}).catch((err) => resEl.innerText = `Some problems with request - ${err}`)
+	}).catch(err => resEl.innerText = `Some problems with request - ${err}`)
 }
 
 function save(data) {
