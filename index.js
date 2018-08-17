@@ -9,10 +9,17 @@ const toEl = currency.querySelector('.select-to');
 initialize();
 
 function initialize() {
+	initNotification();
 	initWorker();
 	initListeners();
 	initCurrensies();
 };
+
+function initNotification() {
+	Notification.requestPermission(function(status) {
+		console.log('Notification permission status:', status);
+	});
+}
 
 function initWorker() {
 	if ('serviceWorker' in navigator) {
@@ -62,7 +69,9 @@ function getCurrency() {
 			for (let item in data) {
 				rate = data[item].val;
 			}
-
+			if (!navigator.onLine) {
+				displayNotification('Application works offline');
+			}
 			calculate(rate);
 		})
 		.catch(err => resEl.innerText = `Some problems with request - ${err}`);
@@ -122,4 +131,12 @@ function isNotDuplicate(list, itemFrom, itemTo) {
 
 function getQuery(itemFrom, itemTo) {
 	return `https://free.currencyconverterapi.com/api/v5/convert?q=${itemFrom}_${itemTo}&compact=y`;
+}
+
+function displayNotification(text) {
+    if (Notification.permission == 'granted') {
+        navigator.serviceWorker.getRegistration().then(function(reg) {
+            reg.showNotification(text);
+        });
+    }
 }
