@@ -5,6 +5,13 @@ const clearBtn = currency.querySelector('.clear');
 const resEl = currency.querySelector('.result');
 const fromEl = currency.querySelector('.select-from');
 const toEl = currency.querySelector('.select-to');
+const fetchOptions = {
+	mode: 'cors',
+    header: new Headers({
+		'Access-Control-Allow-Origin':'*',
+		'Content-Type': 'multipart/form-data'
+	}),
+}
 
 initialize();
 
@@ -64,7 +71,7 @@ function getCurrency() {
 		return;
 	}
 
-	fetch(query)
+	fetch(query, fetchOptions)
 		.then(resp=> {return resp.json()})
 		.then(data=>{
 			let rate = 1;
@@ -95,7 +102,7 @@ function clear() {
 function updateData() {
 	const allQueries = createAllQueries();
 
-	Promise.all(allQueries.map(url => fetch(url))).then(responses => {
+	Promise.all(allQueries.map(url => fetch(url, fetchOptions))).then(responses => {
 		return Promise.all(responses.map(res => res.json()))
 	}).then(data => {
 		save(data)
