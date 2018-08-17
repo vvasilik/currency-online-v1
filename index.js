@@ -32,7 +32,7 @@ function initListeners() {
 function initCurrensies() {
 	const currencyData = localStorage.getItem('currencyData');
 	
-	if (!currencyData || isDateExpired(currencyData)) {debugger
+	if (!currencyData || isDateExpired(currencyData)) {
 		updateData(currencyData);
 	}
 }
@@ -40,8 +40,7 @@ function initCurrensies() {
 function isDateExpired(currencyData) {
 	const updatedDate = JSON.parse(currencyData).date;
 	const currentDate = (new Date()).getTime();
-	console.log((currentDate - updatedDate) / 1000);
-	debugger
+
 	return ((currentDate - updatedDate) / 1000 /*/ 60 / 60*/) > 20; //24;
 }
 
@@ -51,7 +50,7 @@ function getCurrency() {
 	const query = getQuery(fromVal, toVal);
 
 	if (fromVal === toVal) {
-		calculate(rate);
+		calculate(1);
 		return;
 	}
 
@@ -116,10 +115,9 @@ function createAllQueries() {
 }
 
 function isNotDuplicate(list, itemFrom, itemTo) {
-	const firstVal = getQuery(itemFrom, itemTo);
-	const secondVal = getQuery(itemTo, itemFrom);
+	const query = getQuery(itemFrom, itemTo);
 
-	return !list.includes(firstVal) && !list.includes(secondVal);
+	return !list.includes(query);
 }
 
 function getQuery(itemFrom, itemTo) {
