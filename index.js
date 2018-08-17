@@ -37,11 +37,14 @@ function initListeners() {
 }
 
 function initCurrensies() {
-	const currencyData = localStorage.getItem('currencyData');
+	if (navigator.onLine) {
+		updateData();
+	}
+	/*const currencyData = localStorage.getItem('currencyData');
 	
 	if (!currencyData || isDateExpired(currencyData)) {
-		updateData(currencyData);
-	}
+		updateData();
+	}*/
 }
 
 function isDateExpired(currencyData) {
