@@ -12,7 +12,6 @@ function initialize() {
 	initNotification();
 	initWorker();
 	initListeners();
-	initCurrensies();
 };
 
 function initNotification() {
@@ -34,12 +33,6 @@ function initWorker() {
 function initListeners() {
 	getBtn.addEventListener('click', getCurrency);
 	clearBtn.addEventListener('click', clear);
-}
-
-function initCurrensies() {
-	if (navigator.onLine) {
-		updateData();
-	}
 }
 
 function getCurrency() {
@@ -80,44 +73,12 @@ function clear() {
 	inputEl.focus();
 }
 
-function updateData() {
-	const allQueries = createAllQueries();
-
-	Promise.all(allQueries.map(url => fetch(url))).then(responses => {
-		return Promise.all(responses.map(res => res.json()))
-	}).then(data => {
-		save(data)
-	}).catch(err => resEl.innerText = `Some problems with request - ${err}`)
-}
-
 function save(data) {
 	const saveData = {
 		list: data,
 		date: (new Date).getTime()
 	}
 	localStorage.setItem('currencyData', JSON.stringify(saveData));
-}
-
-function createAllQueries() {
-	const allFrom = [...fromEl.options].map(option => option.value);
-	const allTo = [...toEl.options].map(option => option.value);
-	const result = [];
-
-	allFrom.forEach(itemFrom => {
-		allTo.forEach(itemTo => {
-			if (itemFrom !== itemTo && isNotDuplicate(result, itemFrom, itemTo)) {
-				result.push(getQuery(itemFrom, itemTo));	
-			}
-		});
-	});
-
-	return result;
-}
-
-function isNotDuplicate(list, itemFrom, itemTo) {
-	const query = getQuery(itemFrom, itemTo);
-
-	return !list.includes(query);
 }
 
 function getQuery(itemFrom, itemTo) {
