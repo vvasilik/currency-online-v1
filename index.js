@@ -12,7 +12,7 @@ function initialize() {
 	initNotification();
 	initWorker();
 	initListeners();
-	initCurrensies();
+	// initCurrensies();
 };
 
 function initNotification() {
