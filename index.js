@@ -40,18 +40,6 @@ function initCurrensies() {
 	if (navigator.onLine) {
 		updateData();
 	}
-	/*const currencyData = localStorage.getItem('currencyData');
-	
-	if (!currencyData || isDateExpired(currencyData)) {
-		updateData();
-	}*/
-}
-
-function isDateExpired(currencyData) {
-	const updatedDate = JSON.parse(currencyData).date;
-	const currentDate = (new Date()).getTime();
-
-	return ((currentDate - updatedDate) / 1000 /*/ 60 / 60*/) > 20; //24;
 }
 
 function getCurrency() {
