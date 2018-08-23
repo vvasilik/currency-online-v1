@@ -16,6 +16,9 @@ function initialize() {
 };
 
 function initNotification() {
+	if (typeof(Notification) === 'undefined') {
+		return;
+	}
 	Notification.requestPermission(function(status) {
 		console.log('Notification permission status:', status);
 	});
