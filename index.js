@@ -34,23 +34,33 @@ function initWorker() {
 }
 
 function initListeners() {
-	getBtn.addEventListener('click', getCurrency);
-	clearBtn.addEventListener('click', clear);
+	getBtn.addEventListener('click', submitHandler);
+	clearBtn.addEventListener('click', clearHandler);
 }
 
-function getCurrency() {
+function submitHandler() {
+	showLoader();
+	setCurrencyRate();
+}
+
+function showLoader() {
+	if (navigator.onLine) {
+		setCurrencyResult('Loading...');
+	}
+}
+
+function setCurrencyRate() {
 	const fromVal = fromEl.value;
 	const toVal = toEl.value;
 	const query = getQuery(fromVal, toVal);
 
 	if (fromVal === toVal) {
-		calculate(1);
-		return;
+		setCurrencyResult(calculate(1));
 	}
 
 	fetch(query)
-		.then(resp=> {return resp.json()})
-		.then(data=>{
+		.then(resp => {return resp.json()})
+		.then(data => {
 			let rate = 1;
 
 			for (let item in data) {
@@ -59,7 +69,7 @@ function getCurrency() {
 			if (!navigator.onLine) {
 				displayNotification('Application works offline');
 			}
-			calculate(rate);
+			setCurrencyResult(calculate(rate));
 		})
 		.catch(err => resEl.innerText = `Some problems with request - ${err}`);
 }
@@ -67,10 +77,14 @@ function getCurrency() {
 function calculate(rate) {
 	const num = inputEl.value;
 
-	resEl.innerText = Math.round(rate * num * 100) / 100;
+	return Math.round(rate * num * 100) / 100;
 }
 
-function clear() {
+function setCurrencyResult(currency) {
+	resEl.innerText = currency;
+}
+
+function clearHandler() {
 	inputEl.value = '';
 	resEl.innerText = '';
 	inputEl.focus();
