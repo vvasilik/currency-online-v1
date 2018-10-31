@@ -3,6 +3,7 @@ body {
 	background-color: #f5f5f5;
 }
 .currency {
+	position: relative;
 	padding: 0 10%;
 }
 .row {
@@ -14,12 +15,15 @@ body {
 .row:first-child {
 	margin-top: 5vh;
 }
+.row.right-padding {
+	padding-right: 70px;
+}
 .input {
 	box-sizing: border-box;
 	width: 70%;
 	height: calc(100vh / 3 * .7);
 	padding: 0;
-	border: 1px solid #000;
+	border: 1px solid .000;
 	background: none;
 	text-align: center;
 	font-size: 50px;
@@ -33,7 +37,7 @@ body {
 	width: 100%;
 	height: calc(100vh / 3 * .7 * .7);
 	padding: 0;
-	border: 1px solid #000;
+	border: 1px solid .000;
 	border-width: 1px 1px 1px 0;
 	font-size: 20px;
 }
@@ -41,7 +45,7 @@ body {
 	width: 100%;
 	height: calc(100vh / 3 * .7 * .3);
 	padding: 0;
-	border: 1px solid #000;
+	border: 1px solid .000;
 	border-width: 0 1px 1px 0;
 	font-size: 14px;
 }
@@ -51,10 +55,65 @@ body {
 	align-items: center;
 	width: 100%;
 	height: calc(100vh / 3 * .7);
-	border: 1px solid #000;
+	border: 1px solid .000;
 	font-size: 50px;
 }
-
 select {
 	font-size: 25px;
+}
+.menu {
+	position: absolute;
+	top: 4px;
+	right: 38px;
+	width: 30px;
+	height: 30px;
+}
+.menu span {
+	margin: 0 auto;
+	position: relative;
+	top: 12px;
+}
+.menu span:before, .menu span:after {
+	position: absolute;
+	content: '';
+}
+.menu span, .menu span:before, .menu span:after {
+	width: 30px;
+	height: 3px;
+	background-color: #000;
+	display: block;
+}
+.menu span:before {
+	margin-top: -12px;
+}
+.menu span:after {
+	margin-top: 12px;
+}
+.example5 span {
+	-webkit-transition-duration: 0s; transition-duration: 0s;
+	-webkit-transition-delay: 0.2s; transition-delay: 0.2s;
+}
+body._burger-active .example5 span {
+	background-color: rgba(0,0,0,0.0);
+	-webkit-transition-delay: 0.2s; transition-delay: 0.2s;
+}
+.example5 span:before {
+	-webkit-transition-property: margin, -webkit-transform; transition-property: margin, transform;
+	-webkit-transition-duration: 0.2s; transition-duration: 0.2s;
+	-webkit-transition-delay: 0.2s, 0s; transition-delay: 0.2s, 0s;
+}
+body._burger-active .example5 span:before {
+	margin-top: 0;
+	-webkit-transform: rotate(45deg); transform: rotate(45deg);
+	-webkit-transition-delay: 0s, 0.2s; transition-delay: 0s, 0.2s;
+}
+.example5 span:after {
+	-webkit-transition-property: margin, -webkit-transform; transition-property: margin, transform;
+	-webkit-transition-duration: 0.2s; transition-duration: 0.2s;
+	-webkit-transition-delay: 0.2s, 0s; transition-delay: 0.2s, 0s;
+}
+body._burger-active  span:after {
+	margin-top: 0;
+	-webkit-transform: rotate(-45deg); transform: rotate(-45deg);
+	-webkit-transition-delay: 0s, 0.2s; transition-delay: 0s, 0.2s;
 }

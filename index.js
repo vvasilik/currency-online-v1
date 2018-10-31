@@ -5,6 +5,7 @@ const clearBtn = currency.querySelector('.clear');
 const resEl = currency.querySelector('.result');
 const fromEl = currency.querySelector('.select-from');
 const toEl = currency.querySelector('.select-to');
+const burger = currency.querySelector('.menu');
 
 initialize();
 
@@ -36,6 +37,7 @@ function initWorker() {
 function initListeners() {
 	getBtn.addEventListener('click', getCurrency);
 	clearBtn.addEventListener('click', clear);
+	burger.addEventListener('click', toggleMenu);
 }
 
 function getCurrency() {
@@ -74,6 +76,17 @@ function clear() {
 	inputEl.value = '';
 	resEl.innerText = '';
 	inputEl.focus();
+}
+
+function toggleMenu() {
+	const activeClass = '_burger-active';
+	const body = document.body;
+
+	if (body.classList.contains(activeClass)) {
+		body.classList.remove(activeClass);
+	} else {
+		body.classList.add(activeClass);
+	}
 }
 
 function getQuery(itemFrom, itemTo) {
