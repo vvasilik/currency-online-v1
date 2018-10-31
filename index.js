@@ -1,11 +1,11 @@
 const currency = document.querySelector('.currency');
+const burger = document.querySelector('.menu');
 const inputEl = currency.querySelector('.input');
 const getBtn = currency.querySelector('.get');
 const clearBtn = currency.querySelector('.clear');
 const resEl = currency.querySelector('.result');
 const fromEl = currency.querySelector('.select-from');
 const toEl = currency.querySelector('.select-to');
-const burger = currency.querySelector('.menu');
 
 initialize();
 

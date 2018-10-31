@@ -1,19 +1,16 @@
 body {
+	position: relative;
 	margin: 0;
 	background-color: #f5f5f5;
 }
 .currency {
-	position: relative;
-	padding: 0 10%;
+	padding: 5vh 10% 0;
 }
 .row {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 5vh;
-}
-.row:first-child {
-	margin-top: 5vh;
 }
 .row.right-padding {
 	padding-right: 70px;
@@ -63,8 +60,8 @@ select {
 }
 .menu {
 	position: absolute;
-	top: 4px;
-	right: 38px;
+	top: 20px;
+	right: 20px;
 	width: 30px;
 	height: 30px;
 }
