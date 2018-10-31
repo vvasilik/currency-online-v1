@@ -1,0 +1,22 @@
+{
+  "name": "currency-online",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "simple-server ./ 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vvasilik/currency-online.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vvasilik/currency-online/issues"
+  },
+  "homepage": "https://github.com/vvasilik/currency-online#readme",
+  "devDependencies": {
+    "simple-server": "^1.1.1"
+  }
+}
