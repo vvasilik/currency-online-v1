@@ -2,9 +2,11 @@
 	"name": "Currency",
 	"short_name": "Currency",
 	"display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#fefefe",
 	"background_color": "#fefefe",
 	"description": "Currency",
-	"start_url": "https://vvasilik.github.io/currency-online",
+	"start_url": "/index.html",
 	"icons": [{
 		"src": "images/icons/icon-128x128.png",
 		  "sizes": "128x128",
