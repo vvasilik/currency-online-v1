@@ -4,7 +4,7 @@ body {
 }
 .currency {
 	position: relative;
-	padding: 5vh 10%;
+	padding: 13vh 10vw 5vh;
 }
 .row {
 	display: flex;
@@ -14,9 +14,6 @@ body {
 }
 .row:first-child {
 	margin-top: 0;
-}
-.row.right-padding {
-	padding-right: 70px;
 }
 .input {
 	box-sizing: border-box;
@@ -64,7 +61,7 @@ select {
 .menu {
 	position: absolute;
 	top: 5vh;
-	right: 38px;
+	right: 5vh;
 	width: 30px;
 	height: 30px;
 }
@@ -75,7 +72,7 @@ select {
 	top: 0;
 	right: 0;
 	bottom: 0;
-	padding: 5vh 10%;
+	padding: 13vh 10vw 5vh;
 	color: #fff;
 	background: rgba(0, 0, 0, .9);
 }
