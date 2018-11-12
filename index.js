@@ -84,7 +84,7 @@ function getCurrency() {
 function calculate(rate) {
 	const num = Number(inputEl.value);
 	const numDotStored = getData(dotNumberKey);
-	const numDot = numDotStored ? numDotStored : defaultNum;
+	const numDot = numDotStored !== null ? numDotStored : defaultNum;
 
 	resEl.innerText = Math.round(rate * num * Math.pow(10, numDot)) / Math.pow(10, numDot);
 }
@@ -186,7 +186,7 @@ function setDefaultSelector(data) {
 function setDefaultDot() {
 	const data = getData(dotNumberKey);
 
-	dotNumberInput.value = data ? data : defaultNum;
+	dotNumberInput.value = data !== null ? data : defaultNum;
 }
 
 function saveDotNumber() {
