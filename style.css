@@ -4,7 +4,7 @@ body {
 }
 .currency {
 	position: relative;
-	padding: 0 10%;
+	padding: 5vh 10%;
 }
 .row {
 	display: flex;
@@ -13,7 +13,7 @@ body {
 	margin-bottom: 5vh;
 }
 .row:first-child {
-	margin-top: 5vh;
+	margin-top: 0;
 }
 .row.right-padding {
 	padding-right: 70px;
@@ -63,10 +63,22 @@ select {
 }
 .menu {
 	position: absolute;
-	top: 4px;
+	top: 5vh;
 	right: 38px;
 	width: 30px;
 	height: 30px;
+}
+.menu__holder {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, .3);
+}
+._burger-active .menu__holder {
+	display: block;
 }
 .menu span {
 	margin: 0 auto;
@@ -116,4 +128,8 @@ body._burger-active  span:after {
 	margin-top: 0;
 	-webkit-transform: rotate(-45deg); transform: rotate(-45deg);
 	-webkit-transition-delay: 0s, 0.2s; transition-delay: 0s, 0.2s;
+}
+.reverse {
+	font-size: 20px;
+	padding: 4px 7px;
 }

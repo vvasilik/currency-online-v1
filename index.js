@@ -6,6 +6,7 @@ const resEl = currency.querySelector('.result');
 const fromEl = currency.querySelector('.select-from');
 const toEl = currency.querySelector('.select-to');
 const burger = currency.querySelector('.menu');
+const reverse = currency.querySelector('.reverse');
 
 initialize();
 
@@ -38,6 +39,7 @@ function initListeners() {
 	getBtn.addEventListener('click', getCurrency);
 	clearBtn.addEventListener('click', clear);
 	burger.addEventListener('click', toggleMenu);
+	reverse.addEventListener('click', toggleCurrency);
 }
 
 function getCurrency() {
@@ -87,6 +89,14 @@ function toggleMenu() {
 	} else {
 		body.classList.add(activeClass);
 	}
+}
+
+function toggleCurrency() {
+	const firstIndex = fromEl.selectedIndex;
+	const secondIndex = toEl.selectedIndex;
+
+	fromEl[secondIndex].selected = true;
+	toEl[firstIndex].selected = true;
 }
 
 function getQuery(itemFrom, itemTo) {
