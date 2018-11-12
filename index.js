@@ -123,6 +123,7 @@ function saveDefaultHandler() {
 
 	setCurrencySelector(data);
 	saveData('defaultCurrency', data);
+	toggleMenu();
 }
 
 function saveData(key, value) {
