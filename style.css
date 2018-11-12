@@ -75,10 +75,24 @@ select {
 	top: 0;
 	right: 0;
 	bottom: 0;
-	background: rgba(0, 0, 0, .3);
+	padding: 5vh 10%;
+	color: #fff;
+	background: rgba(0, 0, 0, .9);
 }
 ._burger-active .menu__holder {
 	display: block;
+}
+.menu__holder select,
+.menu__holder button {
+	color: #fff;
+	background-color: #000;
+	border: 1px solid #fff;
+}
+.save-default {
+	flex-grow: 1;
+	padding: 10px;
+	border-radius: 3px;
+	font-size: 20px;
 }
 .menu span {
 	margin: 0 auto;
@@ -116,6 +130,7 @@ body._burger-active .example5 span {
 }
 body._burger-active .example5 span:before {
 	margin-top: 0;
+	background-color: #fff;
 	-webkit-transform: rotate(45deg); transform: rotate(45deg);
 	-webkit-transition-delay: 0s, 0.2s; transition-delay: 0s, 0.2s;
 }
@@ -126,6 +141,7 @@ body._burger-active .example5 span:before {
 }
 body._burger-active  span:after {
 	margin-top: 0;
+	background-color: #fff;
 	-webkit-transform: rotate(-45deg); transform: rotate(-45deg);
 	-webkit-transition-delay: 0s, 0.2s; transition-delay: 0s, 0.2s;
 }

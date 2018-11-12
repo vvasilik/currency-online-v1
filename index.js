@@ -7,6 +7,9 @@ const fromEl = currency.querySelector('.select-from');
 const toEl = currency.querySelector('.select-to');
 const burger = currency.querySelector('.menu');
 const reverse = currency.querySelector('.reverse');
+const saveDefaultBtn = currency.querySelector('.save-default');
+const defaultFrom = currency.querySelector('.default-from');
+const defaultTo = currency.querySelector('.default-to');
 
 initialize();
 
@@ -14,6 +17,7 @@ function initialize() {
 	initNotification();
 	initWorker();
 	initListeners();
+	setDefaultCurrency();
 };
 
 function initNotification() {
@@ -40,6 +44,7 @@ function initListeners() {
 	clearBtn.addEventListener('click', clear);
 	burger.addEventListener('click', toggleMenu);
 	reverse.addEventListener('click', toggleCurrency);
+	saveDefaultBtn.addEventListener('click', saveDefaultHandler);
 }
 
 function getCurrency() {
@@ -53,8 +58,8 @@ function getCurrency() {
 	}
 
 	fetch(query)
-		.then(resp=> {return resp.json()})
-		.then(data=>{
+		.then(resp => {return resp.json()})
+		.then(data => {
 			let rate = 1;
 
 			for (let item in data) {
@@ -109,4 +114,60 @@ function displayNotification(text) {
             reg.showNotification(text);
         });
     }
+}
+
+function saveDefaultHandler() {
+	const firstValue = defaultFrom[defaultFrom.selectedIndex].innerText;
+	const secondValue = defaultTo[defaultTo.selectedIndex].innerText;
+	const data = {from: firstValue, to: secondValue};
+
+	setCurrencySelector(data);
+	saveData('defaultCurrency', data);
+}
+
+function saveData(key, value) {
+	localStorage.setItem(key, JSON.stringify(value));
+}
+
+function getData(key) {
+	const data = localStorage.getItem(key);
+
+	return JSON.parse(data);
+}
+
+function setDefaultCurrency() {
+	const defaultState = getData('defaultCurrency');
+
+	if (!defaultState) {
+		return;
+	}
+
+	setCurrencySelector(defaultState);
+	setDefaultSelector(defaultState);
+}
+
+function setCurrencySelector(data) {
+	[...fromEl.options].forEach((option, index) => {
+		if (option.innerText === data.from) {
+			fromEl[index].selected = true;
+		}
+	});
+	[...toEl.options].forEach((option, index) => {
+		if (option.innerText === data.to) {
+			toEl[index].selected = true;
+		}
+	});
+}
+
+function setDefaultSelector(data) {
+	[...defaultFrom.options].forEach((option, index) => {
+		if (option.innerText === data.from) {
+			defaultFrom[index].selected = true;
+		}
+	});
+	[...defaultTo.options].forEach((option, index) => {
+		if (option.innerText === data.to) {
+			defaultTo[index].selected = true;
+		}
+	});
 }
