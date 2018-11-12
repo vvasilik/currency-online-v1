@@ -1,3 +1,7 @@
+const dotNumberKey = 'dotNumber';
+const minNum = 0;
+const maxNum = 5;
+const defaultNum = 2;
 const currency = document.querySelector('.currency');
 const inputEl = currency.querySelector('.input');
 const getBtn = currency.querySelector('.get');
@@ -10,6 +14,8 @@ const reverse = currency.querySelector('.reverse');
 const saveDefaultBtn = currency.querySelector('.save-default');
 const defaultFrom = currency.querySelector('.default-from');
 const defaultTo = currency.querySelector('.default-to');
+const saveDotBtn = currency.querySelector('.save-dot-number');
+const dotNumberInput = currency.querySelector('.dot-number');
 
 initialize();
 
@@ -18,6 +24,7 @@ function initialize() {
 	initWorker();
 	initListeners();
 	setDefaultCurrency();
+	setDefaultDot();
 };
 
 function initNotification() {
@@ -45,6 +52,7 @@ function initListeners() {
 	burger.addEventListener('click', toggleMenu);
 	reverse.addEventListener('click', toggleCurrency);
 	saveDefaultBtn.addEventListener('click', saveDefaultHandler);
+	saveDotBtn.addEventListener('click', saveDotNumber);
 }
 
 function getCurrency() {
@@ -74,9 +82,11 @@ function getCurrency() {
 }
 
 function calculate(rate) {
-	const num = inputEl.value;
+	const num = Number(inputEl.value);
+	const numDotStored = getData(dotNumberKey);
+	const numDot = numDotStored ? numDotStored : defaultNum;
 
-	resEl.innerText = Math.round(rate * num * 100) / 100;
+	resEl.innerText = Math.round(rate * num * Math.pow(10, numDot)) / Math.pow(10, numDot);
 }
 
 function clear() {
@@ -171,4 +181,18 @@ function setDefaultSelector(data) {
 			defaultTo[index].selected = true;
 		}
 	});
+}
+
+function setDefaultDot() {
+	const data = getData(dotNumberKey);
+
+	dotNumberInput.value = data ? data : defaultNum;
+}
+
+function saveDotNumber() {
+	const value = Number(dotNumberInput.value);
+	const num = (value < minNum || value > maxNum) ? defaultNum : value;
+
+	saveData(dotNumberKey, num);
+	toggleMenu();
 }
