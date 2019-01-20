@@ -3,6 +3,7 @@ const minNum = 0;
 const maxNum = 5;
 const defaultNum = 2;
 const currency = document.querySelector('.currency');
+const usedCurrenciesKey = 'usedCurrency';
 const inputEl = currency.querySelector('.input');
 const getBtn = currency.querySelector('.get');
 const clearBtn = currency.querySelector('.clear');
@@ -16,6 +17,21 @@ const defaultFrom = currency.querySelector('.default-from');
 const defaultTo = currency.querySelector('.default-to');
 const saveDotBtn = currency.querySelector('.save-dot-number');
 const dotNumberInput = currency.querySelector('.dot-number');
+const addCurrencySelect = currency.querySelector('.add-currency-select');
+const saveAddCurrencyBtn = currency.querySelector('.save-add-currency');
+const setInitialCurrenciesBtn = currency.querySelector('.set-initial-btn');
+const isFromAttr = 'isFrom';
+const isToAttr = 'isTo';
+const apiGetAll = 'https://free.currencyconverterapi.com/api/v6/currencies';
+const apiGetValue = 'https://free.currencyconverterapi.com/api/v5/convert';
+const initialUsedCurrencies = [
+	{id: 'PLN', currencyName: 'Polish Zloty', [isFromAttr]:true},
+	{id: 'EUR', currencyName: 'Euro'},
+	{id: 'USD', currencyName: 'United States Dollar'},
+	{id: 'UAH', currencyName: 'Ukrainian Hryvnia', [isToAttr]:true},
+	{id: 'RUB', currencyName: 'Russian Ruble'}
+]
+let allCurrencies;
 
 initialize();
 
@@ -23,8 +39,9 @@ function initialize() {
 	initNotification();
 	initWorker();
 	initListeners();
-	setDefaultCurrency();
+	setCurrenciesSelectors();
 	setDefaultDot();
+	setAllCurrencies();
 };
 
 function initNotification() {
@@ -53,6 +70,29 @@ function initListeners() {
 	reverse.addEventListener('click', toggleCurrency);
 	saveDefaultBtn.addEventListener('click', saveDefaultHandler);
 	saveDotBtn.addEventListener('click', saveDotNumber);
+	saveAddCurrencyBtn.addEventListener('click', saveAddCurrency);
+	setInitialCurrenciesBtn.addEventListener('click', setInitialCurrencies);
+}
+
+function setCurrenciesSelectors() {
+	clearSelectors();
+	setSelectors();
+}
+
+function clearSelectors() {
+	fromEl.innerHTML = '';
+	toEl.innerHTML = '';
+	defaultFrom.innerHTML = '';
+	defaultTo.innerHTML = '';
+}
+
+function setSelectors() {
+	const data = getData(usedCurrenciesKey) || initialUsedCurrencies;
+
+	fromEl.appendChild(getMountedOptions(data, {selectPosition: isFromAttr, isShort: true}));
+	toEl.appendChild(getMountedOptions(data, {selectPosition: isToAttr, isShort: true}));
+	defaultFrom.appendChild(getMountedOptions(data, {selectPosition: isFromAttr, isShort: true}));
+	defaultTo.appendChild(getMountedOptions(data, {selectPosition: isToAttr, isShort: true}));
 }
 
 function getCurrency() {
@@ -115,7 +155,7 @@ function toggleCurrency() {
 }
 
 function getQuery(itemFrom, itemTo) {
-	return `https://free.currencyconverterapi.com/api/v5/convert?q=${itemFrom}_${itemTo}&compact=y`;
+	return `${apiGetValue}?q=${itemFrom}_${itemTo}&compact=y`;
 }
 
 function displayNotification(text) {
@@ -127,12 +167,26 @@ function displayNotification(text) {
 }
 
 function saveDefaultHandler() {
-	const firstValue = defaultFrom[defaultFrom.selectedIndex].innerText;
-	const secondValue = defaultTo[defaultTo.selectedIndex].innerText;
-	const data = {from: firstValue, to: secondValue};
+	const firstValue = defaultFrom[defaultFrom.selectedIndex].id;
+	const secondValue = defaultTo[defaultTo.selectedIndex].id;
+	const data = getData(usedCurrenciesKey) || initialUsedCurrencies;
 
-	setCurrencySelector(data);
-	saveData('defaultCurrency', data);
+	data.forEach(item => {
+		const id = item.id
+
+		item[isFromAttr] = false;
+		item[isToAttr] = false;
+
+		if (id === firstValue) {
+			item[isFromAttr] = true;
+		}
+
+		if (id === secondValue) {
+			item[isToAttr] = true;
+		}
+	});
+	saveData(usedCurrenciesKey, data);
+	setCurrenciesSelectors();
 	toggleMenu();
 }
 
@@ -146,43 +200,6 @@ function getData(key) {
 	return JSON.parse(data);
 }
 
-function setDefaultCurrency() {
-	const defaultState = getData('defaultCurrency');
-
-	if (!defaultState) {
-		return;
-	}
-
-	setCurrencySelector(defaultState);
-	setDefaultSelector(defaultState);
-}
-
-function setCurrencySelector(data) {
-	[...fromEl.options].forEach((option, index) => {
-		if (option.innerText === data.from) {
-			fromEl[index].selected = true;
-		}
-	});
-	[...toEl.options].forEach((option, index) => {
-		if (option.innerText === data.to) {
-			toEl[index].selected = true;
-		}
-	});
-}
-
-function setDefaultSelector(data) {
-	[...defaultFrom.options].forEach((option, index) => {
-		if (option.innerText === data.from) {
-			defaultFrom[index].selected = true;
-		}
-	});
-	[...defaultTo.options].forEach((option, index) => {
-		if (option.innerText === data.to) {
-			defaultTo[index].selected = true;
-		}
-	});
-}
-
 function setDefaultDot() {
 	const data = getData(dotNumberKey);
 
@@ -194,5 +211,89 @@ function saveDotNumber() {
 	const num = (value < minNum || value > maxNum) ? defaultNum : value;
 
 	saveData(dotNumberKey, num);
+	toggleMenu();
+}
+
+function setAllCurrencies() {
+	fetch(apiGetAll)
+		.then(res => res.json())
+		.then(data => {
+			allCurrencies = data.results;
+			mountAllCurrencies(allCurrencies);
+		})
+}
+
+function mountAllCurrencies(data=allCurrencies) {
+	const filteredData = filterAlreadyExist(data);
+	const mountedOptions = getMountedOptions(filteredData);
+
+	addCurrencySelect.innerHTML = '';
+	addCurrencySelect.appendChild(mountedOptions);
+}
+
+function filterAlreadyExist(data) {
+	const usedCurrencies = getData(usedCurrenciesKey) || initialUsedCurrencies;
+	const res = {};
+
+	Object.keys(data).forEach(item => {
+		const id = data[item].id;
+		if (usedCurrencies.filter(currency => currency.id === item).length === 0) {
+			res[id] = data[id];
+		}
+	});
+
+	return res;
+}
+
+function getMountedOptions(data, settings) {
+	const options = Object.keys(data).map(item => createOption(data[item], settings));
+	const wrapper = document.createDocumentFragment();
+
+	options.forEach(item => wrapper.appendChild(item));
+
+	return wrapper;
+}
+
+function createOption(item, settings={}) {
+	const el = document.createElement('option');
+
+	el.value = item.id;
+	el.id = item.id;
+
+	if (settings.isShort) {
+		el.innerText = item.id;
+	} else {
+		el.innerText = `${item.currencyName} (${item.id})`;
+	}
+
+	if (item[settings.selectPosition]) {
+		el.selected = true;
+	} else {
+		el.selected = false;
+	}
+
+	return el;
+}
+
+function saveAddCurrency() {
+	const usedCurrencies = getData(usedCurrenciesKey) || initialUsedCurrencies;
+	const newCurrency = addCurrencySelect[addCurrencySelect.selectedIndex];
+	const newCurrencies = [...usedCurrencies];
+
+	newCurrencies.push({
+		id: newCurrency.id,
+		currencyName: newCurrency.innerText
+	})
+
+	saveData(usedCurrenciesKey, newCurrencies);
+	setCurrenciesSelectors();
+	mountAllCurrencies();
+	toggleMenu();
+}
+
+function setInitialCurrencies() {
+	saveData(usedCurrenciesKey, null);
+	mountAllCurrencies();
+	setCurrenciesSelectors();
 	toggleMenu();
 }

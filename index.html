@@ -20,21 +20,9 @@
 <body>
 	<section class="currency">
 		<div class="row">
-			<select class="select-from">
-				<option value="EUR">EUR</option>
-				<option value="USD">USD</option>
-				<option value="UAH">UAH</option>
-				<option value="RUB">RUB</option>
-				<option selected value="PLN">PLN</option>
-			</select>
+			<select class="select-from"></select>
 			<button class="reverse">↔</button>
-			<select class="select-to">
-				<option value="EUR">EUR</option>
-				<option value="USD">USD</option>
-				<option selected value="UAH">UAH</option>
-				<option value="RUB">RUB</option>
-				<option value="PLN">PLN</option>
-			</select>
+			<select class="select-to"></select>
 		</div>
 		<div class="row">
 			<input class="input" type="number">
@@ -51,20 +39,8 @@
 				<span>Default currency</span>
 			</div>
 			<div class="row">
-				<select class="default-from">
-					<option value="EUR">EUR</option>
-					<option value="USD">USD</option>
-					<option value="UAH">UAH</option>
-					<option value="RUB">RUB</option>
-					<option selected value="PLN">PLN</option>
-				</select>
-				<select class="default-to">
-					<option value="EUR">EUR</option>
-					<option value="USD">USD</option>
-					<option selected value="UAH">UAH</option>
-					<option value="RUB">RUB</option>
-					<option value="PLN">PLN</option>
-				</select>
+				<select class="default-from"></select>
+				<select class="default-to"></select>
 			</div>
 			<div class="row">
 				<button class="btn save-default">Save</button>
@@ -76,6 +52,17 @@
 			<div class="row">
 				<input class="dot-number" value="2" type="number" min="0" max="5">
 				<button class="btn save-dot-number">Save</button>
+			</div>
+			<div class="divider"></div>
+			<div class="row">
+				<span>Add currency</span>
+			</div>
+			<div class="row">
+				<select class="add-currency-select"></select>
+			</div>
+			<div class="row">
+				<button class="btn save-add-currency">Save</button>
+				<button class="btn set-initial-btn">Set initial</button>
 			</div>
 			<div class="divider"></div>
 		</div>
