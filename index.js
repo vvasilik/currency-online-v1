@@ -25,11 +25,11 @@ const isToAttr = 'isTo';
 const apiGetAll = 'https://free.currencyconverterapi.com/api/v6/currencies';
 const apiGetValue = 'https://free.currencyconverterapi.com/api/v5/convert';
 const initialUsedCurrencies = [
-	{id: 'PLN', currencyName: 'Polish Zloty', [isFromAttr]:true},
-	{id: 'EUR', currencyName: 'Euro'},
-	{id: 'USD', currencyName: 'United States Dollar'},
-	{id: 'UAH', currencyName: 'Ukrainian Hryvnia', [isToAttr]:true},
-	{id: 'RUB', currencyName: 'Russian Ruble'}
+	{id: 'PLN', currencyName: 'Polish Zloty', name: 'Polish Zloty', [isFromAttr]:true},
+	{id: 'EUR', currencyName: 'Euro', name: 'Euro'},
+	{id: 'USD', currencyName: 'United States Dollar', name: 'United States Dollar'},
+	{id: 'UAH', currencyName: 'Ukrainian Hryvnia', name: 'Ukrainian Hryvnia', [isToAttr]:true},
+	{id: 'RUB', currencyName: 'Russian Ruble', name: 'Russian Ruble'}
 ]
 let allCurrencies;
 
@@ -246,7 +246,9 @@ function filterAlreadyExist(data) {
 }
 
 function getMountedOptions(data, settings) {
-	const options = Object.keys(data).map(item => createOption(data[item], settings));
+	const options = Object.keys(data)
+		.map(item => createOption(data[item], settings))
+		.sort((a,b) => a.dataset.name < b.dataset.name ? -1 : 1);
 	const wrapper = document.createDocumentFragment();
 
 	options.forEach(item => wrapper.appendChild(item));
@@ -259,6 +261,7 @@ function createOption(item, settings={}) {
 
 	el.value = item.id;
 	el.id = item.id;
+	el.dataset.name = item.currencyName;
 
 	if (settings.isShort) {
 		el.innerText = item.id;
