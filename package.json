@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "parcel watch ./src/index.js",
     "server": "parcel server index.html --port 8000",
-    "build": "parcel build entry src/index.js"
+    "build": "rm -rf dist && parcel build entry src/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +19,6 @@
   },
   "homepage": "https://github.com/vvasilik/currency-online#readme",
   "devDependencies": {
-    "parcel": "^1.11.0",
-    "parcel-bundler": "^1.11.0",
-    "simple-server": "^1.1.1"
+    "parcel": "^1.11.0"
   }
 }
