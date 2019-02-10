@@ -5,6 +5,8 @@ import {
 	addCurrencySelect, saveAddCurrencyBtn,	setInitialCurrenciesBtn,
 	isFromAttr,	isToAttr, apiGetAll, apiGetValue, initialUsedCurrencies
 } from './constants';
+import { initNotification, displayNotification } from './notification';
+import { getQuery, clearSelectors, clear, getMountedOptions } from './helpers';
 
 let allCurrencies;
 
@@ -17,15 +19,6 @@ function initialize() {
 	setDefaultDot();
 	setAllCurrencies();
 };
-
-function initNotification() {
-	if (typeof(Notification) === 'undefined') {
-		return;
-	}
-	Notification.requestPermission(function(status) {
-		console.log('Notification permission status:', status);
-	});
-}
 
 function initListeners() {
 	getBtn.addEventListener('click', getCurrency);
@@ -41,13 +34,6 @@ function initListeners() {
 function setCurrenciesSelectors() {
 	clearSelectors();
 	setSelectors();
-}
-
-function clearSelectors() {
-	fromEl.innerHTML = '';
-	toEl.innerHTML = '';
-	defaultFrom.innerHTML = '';
-	defaultTo.innerHTML = '';
 }
 
 function setSelectors() {
@@ -93,12 +79,6 @@ function calculate(rate) {
 	resEl.innerText = Math.round(rate * num * Math.pow(10, numDot)) / Math.pow(10, numDot);
 }
 
-function clear() {
-	inputEl.value = '';
-	resEl.innerText = '';
-	inputEl.focus();
-}
-
 function toggleMenu() {
 	const activeClass = '_burger-active';
 	const body = document.body;
@@ -116,18 +96,6 @@ function toggleCurrency() {
 
 	fromEl[secondIndex].selected = true;
 	toEl[firstIndex].selected = true;
-}
-
-function getQuery(itemFrom, itemTo) {
-	return `${apiGetValue}?q=${itemFrom}_${itemTo}&compact=y`;
-}
-
-function displayNotification(text) {
-    if (Notification.permission == 'granted') {
-        navigator.serviceWorker.getRegistration().then(function(reg) {
-            reg.showNotification(text);
-        });
-    }
 }
 
 function saveDefaultHandler() {
@@ -207,39 +175,6 @@ function filterAlreadyExist(data) {
 	});
 
 	return res;
-}
-
-function getMountedOptions(data, settings) {
-	const options = Object.keys(data)
-		.map(item => createOption(data[item], settings))
-		.sort((a,b) => a.dataset.name < b.dataset.name ? -1 : 1);
-	const wrapper = document.createDocumentFragment();
-
-	options.forEach(item => wrapper.appendChild(item));
-
-	return wrapper;
-}
-
-function createOption(item, settings={}) {
-	const el = document.createElement('option');
-
-	el.value = item.id;
-	el.id = item.id;
-	el.dataset.name = item.currencyName;
-
-	if (settings.isShort) {
-		el.innerText = item.id;
-	} else {
-		el.innerText = `${item.currencyName} (${item.id})`;
-	}
-
-	if (item[settings.selectPosition]) {
-		el.selected = true;
-	} else {
-		el.selected = false;
-	}
-
-	return el;
 }
 
 function saveAddCurrency() {
