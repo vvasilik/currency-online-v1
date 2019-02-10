@@ -76,7 +76,7 @@ function calculate(rate) {
 	const numDotStored = getData(dotNumberKey);
 	const numDot = numDotStored !== null ? numDotStored : defaultNum;
 
-	resEl.innerText = Math.round(rate * num * Math.pow(10, numDot)) / Math.pow(10, numDot);
+	resEl.innerText = (Math.round(rate * num * Math.pow(10, numDot)) / Math.pow(10, numDot)).toString();
 }
 
 function toggleMenu() {
@@ -94,8 +94,8 @@ function toggleCurrency() {
 	const firstIndex = fromEl.selectedIndex;
 	const secondIndex = toEl.selectedIndex;
 
-	fromEl[secondIndex].selected = true;
-	toEl[firstIndex].selected = true;
+	(<HTMLOptionElement>fromEl[secondIndex]).selected = true;
+	(<HTMLOptionElement>toEl[firstIndex]).selected = true;
 }
 
 function saveDefaultHandler() {

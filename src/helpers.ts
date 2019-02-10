@@ -1,5 +1,10 @@
 import { apiGetValue, fromEl, toEl, defaultFrom, defaultTo, inputEl, resEl } from './constants';
 
+interface OptionSettings {
+	isShort: Boolean,
+	selectPosition: string
+}
+
 export function getQuery(itemFrom, itemTo) {
 	return `${apiGetValue}?q=${itemFrom}_${itemTo}&compact=y`;
 }
@@ -17,7 +22,7 @@ export function clear() {
 	inputEl.focus();
 }
 
-export function getMountedOptions(data, settings) {
+export function getMountedOptions(data, settings?:OptionSettings) {
 	const options = Object.keys(data)
 		.map(item => createOption(data[item], settings))
 		.sort((a,b) => a.dataset.name < b.dataset.name ? -1 : 1);
@@ -28,7 +33,7 @@ export function getMountedOptions(data, settings) {
 	return wrapper;
 }
 
-export function createOption(item, settings={}) {
+export function createOption(item, settings:OptionSettings) {
 	const el = document.createElement('option');
 
 	el.value = item.id;
