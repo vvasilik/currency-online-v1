@@ -37,7 +37,6 @@ initialize();
 
 function initialize() {
 	initNotification();
-	initWorker();
 	initListeners();
 	setCurrenciesSelectors();
 	setDefaultDot();
@@ -51,16 +50,6 @@ function initNotification() {
 	Notification.requestPermission(function(status) {
 		console.log('Notification permission status:', status);
 	});
-}
-
-function initWorker() {
-	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('service-worker.js').then(function(reg) {
-			console.log('Registration succeeded. Scope is ' + reg.scope);
-		}).catch(function(error) {
-			console.log('Registration failed with ' + error);
-		});
-	};
 }
 
 function initListeners() {
