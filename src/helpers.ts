@@ -22,7 +22,7 @@ export function clear() {
 	inputEl.focus();
 }
 
-export function getMountedOptions(data, settings?:OptionSettings) {
+export function getMountedOptions(data, settings:OptionSettings) {
 	const options = Object.keys(data)
 		.map(item => createOption(data[item], settings))
 		.sort((a,b) => a.dataset.name < b.dataset.name ? -1 : 1);

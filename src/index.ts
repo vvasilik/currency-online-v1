@@ -157,7 +157,7 @@ function setAllCurrencies() {
 
 function mountAllCurrencies(data=allCurrencies) {
 	const filteredData = filterAlreadyExist(data);
-	const mountedOptions = getMountedOptions(filteredData);
+	const mountedOptions = getMountedOptions(filteredData, {isShort: false, selectPosition: null});
 
 	addCurrencySelect.innerHTML = '';
 	addCurrencySelect.appendChild(mountedOptions);
