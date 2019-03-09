@@ -3,7 +3,7 @@ import {
 	inputEl, getBtn, clearBtn, resEl, fromEl, toEl,	burger, reverse,
 	saveDefaultBtn,	defaultFrom, defaultTo,	saveDotBtn,	dotNumberInput,
 	addCurrencySelect, saveAddCurrencyBtn,	setInitialCurrenciesBtn,
-	isFromAttr,	isToAttr, apiGetAll, apiGetValue, initialUsedCurrencies
+	isFromAttr,	isToAttr, apiGetAll, initialUsedCurrencies
 } from './constants';
 import { initNotification, displayNotification } from './notification';
 import { getQuery, clearSelectors, clear, getMountedOptions } from './helpers';

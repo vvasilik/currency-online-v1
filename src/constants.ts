@@ -24,8 +24,10 @@ export const saveAddCurrencyBtn:HTMLElement = currency.querySelector('.save-add-
 export const setInitialCurrenciesBtn:HTMLElement = currency.querySelector('.set-initial-btn');
 export const isFromAttr = 'isFrom';
 export const isToAttr = 'isTo';
-export const apiGetAll = 'https://free.currencyconverterapi.com/api/v6/currencies';
+export const apiKey = 'a13681c8faf6a7aa50d9';
+export const apiKeyPath = `&apiKey=${apiKey}`;
 export const apiGetValue = 'https://free.currencyconverterapi.com/api/v5/convert';
+export const apiGetAll = `https://free.currencyconverterapi.com/api/v6/currencies${apiKeyPath}`;
 export const initialUsedCurrencies = [
 	{id: 'PLN', currencyName: 'Polish Zloty', name: 'Polish Zloty', [isFromAttr]:true},
 	{id: 'EUR', currencyName: 'Euro', name: 'Euro'},

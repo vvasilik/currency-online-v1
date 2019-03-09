@@ -1,4 +1,4 @@
-import { apiGetValue, fromEl, toEl, defaultFrom, defaultTo, inputEl, resEl } from './constants';
+import { apiGetValue, fromEl, toEl, defaultFrom, defaultTo, inputEl, resEl, apiKeyPath } from './constants';
 
 interface OptionSettings {
 	isShort: Boolean,
@@ -6,7 +6,7 @@ interface OptionSettings {
 }
 
 export function getQuery(itemFrom, itemTo) {
-	return `${apiGetValue}?q=${itemFrom}_${itemTo}&compact=y`;
+	return `${apiGetValue}?q=${itemFrom}_${itemTo}&compact=y${apiKeyPath}`;
 }
 
 export function clearSelectors() {
