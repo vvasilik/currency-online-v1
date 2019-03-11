@@ -136,9 +136,10 @@ exports.setInitialCurrenciesBtn = exports.currency.querySelector('.set-initial-b
 exports.isFromAttr = 'isFrom';
 exports.isToAttr = 'isTo';
 exports.apiKey = 'a13681c8faf6a7aa50d9';
-exports.apiKeyPath = "&apiKey=" + exports.apiKey;
+exports.apiKeyPath = "apiKey=" + exports.apiKey;
 exports.apiGetValue = 'https://free.currencyconverterapi.com/api/v5/convert';
-exports.apiGetAll = "https://free.currencyconverterapi.com/api/v6/currencies" + exports.apiKeyPath;
+exports.apiGetAll = "https://free.currencyconverterapi.com/api/v6/currencies?" + exports.apiKeyPath;
+console.log(exports.apiGetAll);
 exports.initialUsedCurrencies = [(_a = {
   id: 'PLN',
   currencyName: 'Polish Zloty',
@@ -194,7 +195,7 @@ exports.__esModule = true;
 var constants_1 = require("./constants");
 
 function getQuery(itemFrom, itemTo) {
-  return constants_1.apiGetValue + "?q=" + itemFrom + "_" + itemTo + "&compact=y" + constants_1.apiKeyPath;
+  return constants_1.apiGetValue + "?q=" + itemFrom + "_" + itemTo + "&compact=y&" + constants_1.apiKeyPath;
 }
 
 exports.getQuery = getQuery;
@@ -495,7 +496,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59511" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63541" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

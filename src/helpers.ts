@@ -6,7 +6,7 @@ interface OptionSettings {
 }
 
 export function getQuery(itemFrom, itemTo) {
-	return `${apiGetValue}?q=${itemFrom}_${itemTo}&compact=y${apiKeyPath}`;
+	return `${apiGetValue}?q=${itemFrom}_${itemTo}&compact=y&${apiKeyPath}`;
 }
 
 export function clearSelectors() {
