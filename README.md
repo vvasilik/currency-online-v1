@@ -1,5 +1,5 @@
 # Development
-- npm run Watch
+- npm run watch
 - npm run server
 
 # Build
