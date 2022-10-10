@@ -24,7 +24,7 @@ export const saveAddCurrencyBtn:HTMLElement = currency.querySelector('.save-add-
 export const setInitialCurrenciesBtn:HTMLElement = currency.querySelector('.set-initial-btn');
 export const isFromAttr = 'isFrom';
 export const isToAttr = 'isTo';
-export const apiKey = 'a13681c8faf6a7aa50d9';
+export const apiKey = 'b40baf7b5eaed68e414c';
 export const apiKeyPath = `apiKey=${apiKey}`;
 export const apiGetValue = 'https://free.currencyconverterapi.com/api/v5/convert';
 export const apiGetAll = `https://free.currencyconverterapi.com/api/v6/currencies?${apiKeyPath}`;
